@@ -1,10 +1,11 @@
 var time = 295;
 var starFlag = true;
 var state = true;
-setTimeout(function () {
-  alert("ready to excercise");
-}, 2000);
+var audio1 = new Audio("../audios/text.mp3");
+
 $(document).ready(function () {
+  $("#modalBox").modal("show");
+
   buttonEvt();
 });
 
@@ -18,6 +19,10 @@ function buttonEvt() {
   var sec = 0;
   var timer;
 
+  // 모달 안의 okay 버튼에 이벤트를 건다.
+  $("#closeModalBtn").on("click", function () {
+    $("#modalBox").modal("hide");
+  });
   // start btn
   $("#goStopBtn").click(function () {
     if (state) {
@@ -29,7 +34,6 @@ function buttonEvt() {
         init();
       }
 
-
       timer = setInterval(function () {
         time++;
 
@@ -38,16 +42,36 @@ function buttonEvt() {
         sec = time % 60;
         min = min % 60;
 
-        if(time==300){
-          alert('cheer up')
-          time+=295
-        }else if(time==600){
-          alert('almost done')
-          time+=1190
-        }else if(time==1800){
-          alert('weldone~')
-        }
+        if (time == 300) {
+          $(".modal-body").text("cheerup");
+          $("#modalBox").modal("show");
 
+          // 오디오 재생
+          audio1.play();
+
+          setTimeout(() => {
+            $("#modalBox").modal("hide");
+            // 오디오 중지
+            audio1.pause();
+          }, 5000);
+
+          time += 294;
+        } else if (time == 600) {
+          $(".modal-body").text("almost done");
+
+          $("#modalBox").modal("show");
+          setTimeout(() => {
+            $("#modalBox").modal("hide");
+          }, 5000);
+          time += 1190;
+        } else if (time == 1800) {
+          $(".modal-body").text("weldone");
+
+          $("#modalBox").modal("show");
+          setTimeout(() => {
+            $("#modalBox").modal("hide");
+          }, 5000);
+        }
 
         var th = hour;
         var tm = min;
