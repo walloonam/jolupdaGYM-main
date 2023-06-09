@@ -2,12 +2,26 @@ var time = 295;
 var starFlag = true;
 var state = true;
 var audio1 = new Audio("../audios/text.mp3");
-
+var befor1 = new Audio("../audios/before/B_1_Just start with one exercise, and I promise you’ll feel more energized and motivated to continue..mp3")
+var pro1 = new Audio("../audios/progress/P_1_Keep going, you got this!.mp3")
+var pro2 = new Audio("../audios/progress/P_1_You got this! Don’t give up, keep pushing yourself to reach your goals and remember why you started in the first place!.mp3")
+var pro3 = new Audio("../audios/progress/P_2_Push yourself a little harder, always remember why you started. You got this!.mp3")
 $(document).ready(function () {
   $("#modalBox").modal("show");
 
   buttonEvt();
 });
+
+function startMent(){
+  setTimeout(()=> {
+    $(".modal-body").text("Just start with one exercise, and I promise you’ll feel more energized and motivated to continue.");
+    $("#modalBox").modal("show");
+    befor1.play()
+    setTimeout(() => {
+      $("#modalBox").modal("hide");
+    }, );
+  }, 15000);
+}
 
 function init() {
   document.querySelector(".stopWatch").innerHTML = "00:00:00";
@@ -18,11 +32,15 @@ function buttonEvt() {
   var min = 0;
   var sec = 0;
   var timer;
-
+  
   // 모달 안의 okay 버튼에 이벤트를 건다.
-  $("#closeModalBtn").on("click", function () {
-    $("#modalBox").modal("hide");
-  });
+
+
+
+  startMent()
+
+
+
   // start btn
   $("#goStopBtn").click(function () {
     if (state) {
@@ -43,34 +61,35 @@ function buttonEvt() {
         min = min % 60;
 
         if (time == 300) {
-          $(".modal-body").text("cheerup");
+          $(".modal-body").text("Keep going, you got this!");
           $("#modalBox").modal("show");
 
           // 오디오 재생
-          audio1.play();
+          pro1.play();
 
           setTimeout(() => {
             $("#modalBox").modal("hide");
             // 오디오 중지
-            audio1.pause();
-          }, 5000);
+            time += 286;
+          }, 3000);
 
-          time += 294;
+
         } else if (time == 600) {
-          $(".modal-body").text("almost done");
-
+          $(".modal-body").text("You got this! Don’t give up, keep pushing yourself to reach your goals and remember why you started in the first place!");
+          pro2.play();
           $("#modalBox").modal("show");
           setTimeout(() => {
             $("#modalBox").modal("hide");
-          }, 5000);
-          time += 1190;
+            time += 1185;
+          }, 9000);
+
         } else if (time == 1800) {
-          $(".modal-body").text("weldone");
-
+          $(".modal-body").text("Push yourself a little harder, always remember why you started. You got this!");
+          pro3.play();
           $("#modalBox").modal("show");
           setTimeout(() => {
             $("#modalBox").modal("hide");
-          }, 5000);
+          }, 6000);
         }
 
         var th = hour;
@@ -115,5 +134,9 @@ function buttonEvt() {
 
   $("#mypageBtn").click(function () {
     window.location.href = "mypage.html";
+  });
+  $("#closeModalBtn").on("click", function () {
+    $("#modalBox").modal("hide");
+
   });
 }
